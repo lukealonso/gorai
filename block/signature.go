@@ -1,6 +1,8 @@
 package gorai
 
 import (
+	"fmt"
+
 	"github.com/golang/crypto/blake2b"
 	"github.com/lukealonso/ed25519"
 )
@@ -21,11 +23,28 @@ func (s *Signature) Bytes() []byte {
 	return s.Data[:]
 }
 
-func (s *Signature) Verify(a *Account, bh *BlockHash) bool {
+func (s *Signature) Verify(publicKey []byte, bh *BlockHash) bool {
 	h, err := blake2b.New512(nil)
 	if err != nil {
 		// blake2b doesn't return errors from New512, but check anyways.
-		return false
+		panic(err)
 	}
-	return ed25519.Verify(a.PublicKey(), bh.Bytes(), s.Bytes(), h)
+	return ed25519.Verify(publicKey, bh.Bytes(), s.Bytes(), h)
+}
+
+func (s *Signature) Sign(privateKey []byte, bh *BlockHash) error {
+	h, err := blake2b.New512(nil)
+	if err != nil {
+		// blake2b doesn't return errors from New512, but check anyways.
+		panic(err)
+	}
+	if len(privateKey) != ed25519.PrivateKeySize {
+		return fmt.Errorf("invalid private key size")
+	}
+	sig := ed25519.Sign(ed25519.PrivateKey(privateKey), bh.Bytes(), h)
+	if sig == nil || len(sig) != ed25519.SignatureSize || len(sig) != len(s.Data) {
+		return fmt.Errorf("invalid signature size")
+	}
+	copy(s.Data[:], sig)
+	return nil
 }

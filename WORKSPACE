@@ -44,6 +44,6 @@ go_repository(
 
 go_repository(
     name = "com_github_lukealonso_ed25519",
-    commit = "17f813b763327a448c682941924c7cdae3fd1b38",
+    commit = "d43329c8d1fd34a614a27ea6191c02f1100b18bc",
     importpath = "github.com/lukealonso/ed25519",
 )
