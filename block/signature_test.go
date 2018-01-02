@@ -34,12 +34,14 @@ func TestSignatureSign(t *testing.T) {
 
 	var bh BlockHash
 	b.Hash(&bh)
-	sig := b.Signature()
 
-	h, _ := blake2b.New512(nil)
-	pub, prv, _ := ed25519.GenerateKey(nil, h)
-
-	assert.Nil(t, sig.Sign(prv, &bh))
+	h, err := blake2b.New512(nil)
+	assert.NotNil(t, h)
 	assert.Nil(t, err)
-	assert.True(t, sig.Verify(pub, &bh))
+	pub, prv, err := ed25519.GenerateKey(nil, h)
+	assert.Nil(t, err)
+
+	assert.Nil(t, b.Signature().Sign(prv, &bh))
+	assert.Nil(t, err)
+	assert.True(t, b.Signature().Verify(pub, &bh))
 }

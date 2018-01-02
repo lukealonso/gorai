@@ -23,16 +23,16 @@ func (s *Signature) Bytes() []byte {
 	return s.Data[:]
 }
 
-func (s *Signature) Verify(publicKey []byte, bh *BlockHash) bool {
+func (s *Signature) Verify(publicKey []byte, message []byte) bool {
 	h, err := blake2b.New512(nil)
 	if err != nil {
 		// blake2b doesn't return errors from New512, but check anyways.
 		panic(err)
 	}
-	return ed25519.Verify(publicKey, bh.Bytes(), s.Bytes(), h)
+	return ed25519.Verify(publicKey, message, s.Bytes(), h)
 }
 
-func (s *Signature) Sign(privateKey []byte, bh *BlockHash) error {
+func (s *Signature) Sign(privateKey []byte, message []byte) error {
 	h, err := blake2b.New512(nil)
 	if err != nil {
 		// blake2b doesn't return errors from New512, but check anyways.
