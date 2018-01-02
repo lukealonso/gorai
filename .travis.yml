@@ -11,8 +11,6 @@ addons:
         key_url: 'https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg'
     packages:
       - bazel
-      - google-cloud-sdk
-      - kubectl
 
 script:
   # Check our installs.
