@@ -9,8 +9,6 @@ addons:
     sources:
       - sourceline: 'deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8'
         key_url: 'https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg'
-      - sourceline: 'deb [arch=amd64] http://packages.cloud.google.com/apt cloud-sdk-trusty main'
-        key_url: 'https://packages.cloud.google.com/apt/doc/apt-key.gpg'
     packages:
       - bazel
       - google-cloud-sdk
