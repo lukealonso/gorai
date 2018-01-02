@@ -1,4 +1,4 @@
-# Gorai
+# gorai
 A Golang RaiBlocks library, node and wallet.
 
 This is an early work-in-progress. The initial goal is to create an offline wallet for airgapped use, followed by a full node and online wallet.
