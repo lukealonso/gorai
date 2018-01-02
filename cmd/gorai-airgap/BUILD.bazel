@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "github.com/lukealonso/gorai/cmd/grail-airgap",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "gorai-airgap",
+    embed = [":go_default_library"],
+    importpath = "github.com/lukealonso/gorai/cmd/gorai-airgap",
+    visibility = ["//visibility:public"],
+)
+
+go_binary(
+    name = "grail-airgap",
+    embed = [":go_default_library"],
+    importpath = "github.com/lukealonso/gorai/cmd/grail-airgap",
+    visibility = ["//visibility:public"],
+)

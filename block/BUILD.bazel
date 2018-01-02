@@ -1,0 +1,38 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "account.go",
+        "amount.go",
+        "block.go",
+        "blockhash.go",
+        "ledger.go",
+        "signature.go",
+        "util.go",
+        "work.go",
+    ],
+    importpath = "github.com/lukealonso/gorai/gorai",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_golang_crypto//blake2b:go_default_library",
+        "@com_github_lukealonso_ed25519//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "account_test.go",
+        "block_test.go",
+        "blockhash_test.go",
+        "ledger_test.go",
+        "signature_test.go",
+        "util_test.go",
+        "work_test.go",
+    ],
+    data = glob(["testdata/**"]),
+    embed = [":go_default_library"],
+    importpath = "github.com/lukealonso/gorai/gorai",
+    deps = ["@com_github_stretchr_testify//assert:go_default_library"],
+)
